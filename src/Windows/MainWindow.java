@@ -5,6 +5,7 @@
  */
 package Windows;
 
+import Classes.Refinador;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -28,6 +29,7 @@ public class MainWindow extends javax.swing.JFrame {
         initComponents();
     }
 
+    Refinador rf= new Refinador();
     File file;
     ArrayList<String> lines, workable;
     
@@ -81,6 +83,31 @@ public class MainWindow extends javax.swing.JFrame {
             System.out.println(prod);
         }
         System.out.println("");
+    }
+    
+    public boolean InitWork(){
+        int returnVal = fileChooser.showOpenDialog(this);
+        if(returnVal == JFileChooser.APPROVE_OPTION){
+            file = fileChooser.getSelectedFile();
+            lines = new ArrayList<>();
+            try {
+               FileReader fr = new FileReader(file);
+               BufferedReader br = new BufferedReader(fr);
+               String line="";
+               while((line = br.readLine()) != null)
+                   lines.add(line);
+               divideGIC();
+               joinGIC();
+               return true;
+            } catch (FileNotFoundException ex) {
+                Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
+                return false;
+            } catch (IOException ex){
+                Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE,null,ex);
+                return false;
+            }
+        }else
+            return false;
     }
     
     /**
@@ -158,24 +185,15 @@ public class MainWindow extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        int returnVal = fileChooser.showOpenDialog(this);
-        if(returnVal == JFileChooser.APPROVE_OPTION){
-            file = fileChooser.getSelectedFile();
-            lines = new ArrayList<>();
-            try {
-               FileReader fr = new FileReader(file);
-               BufferedReader br = new BufferedReader(fr);
-               String line="";
-               while((line = br.readLine()) != null)
-                   lines.add(line);
-               divideGIC();
-               joinGIC();
-            } catch (FileNotFoundException ex) {
-                Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (IOException ex){
-                Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE,null,ex);
-            }
+        if(InitWork()){
+            ArrayList<String> temp= new ArrayList<String>();
+            temp=(Refinador.noRecursive(workable));
+            Refinador.showArray(temp, false);
+            temp=Refinador.factorize(temp);
+            Refinador.showArray(temp, false);        
         }
+        
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
