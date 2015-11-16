@@ -33,7 +33,11 @@ public class Refinador {
                     if (p.indexOf(gem)==0 && (p.indexOf(gem+"'") != p.indexOf(gem))) { 
                         alfa+=p.replaceFirst(gem, "").replace(gem,gem+"'")+"|";                        
                     }else{
-                        beta+=p+gem+"'|";
+                        if (p.compareTo("€")!=0) {
+                            beta+=p+gem+"'|";
+                        }else{
+                            beta+=gem+"'|";
+                        }
                     }
                 }
                 if (subnogem.length==1) {
