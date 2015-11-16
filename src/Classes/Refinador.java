@@ -40,8 +40,8 @@ public class Refinador {
                     beta=gem+"'|";
                 }
                 gram.remove(prod);                
-                gram.add(i,   gem+"->"+beta+"\b");               
-                gram.add(i+1, gem+"'"+"->"+alfa+"\b"+gem+"'|"+"€");
+                gram.add(i,   gem+"->"+beta.substring(0,beta.length()-1));               
+                gram.add(i+1, gem+"'"+"->"+alfa.substring(0,alfa.length()-1)+gem+"'|"+"€");
             }
         }
         return gram;
@@ -107,7 +107,7 @@ public class Refinador {
                         }
                     }
                     gram.add(index,gem+"->"+f+gem+exp+gamma);
-                    gram.add(index+1,gem+exp+"->"+beta+"\b");
+                    gram.add(index+1,gem+exp+"->"+beta.substring(0,beta.length()-1));
                     gem=gram.get(h).split("->")[0];
                     nogem=gram.get(h).split("->")[1]; 
                     factor.clear();

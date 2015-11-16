@@ -5,10 +5,23 @@
  */
 package Classes;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author Daniel
  */
-class NonTerminal {
+class NonTerminal extends Symbol{
+ 
+    ArrayList<Terminal> Primero;
+    ArrayList<Terminal> Siguiente;
+    ArrayList<Produccion> Producciones;
+    
+    public NonTerminal(String name, boolean terminal) {
+        super(name, terminal);
+        Primero = new ArrayList<Terminal>();
+        Siguiente = new ArrayList<Terminal>();
+        Producciones = new ArrayList<Produccion>();
+    }
     
 }

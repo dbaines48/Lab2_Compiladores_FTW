@@ -5,21 +5,16 @@
  */
 package Classes;
 
-import java.util.ArrayList;
-
 /**
  *
  * @author Daniel
  */
-public class Produccion {
+public class Symbol {
+    String name;
+    boolean isterminal;
     
-    ArrayList<Symbol> Simbolos;
-    
-    public Produccion(String prod){
-        Simbolos = new ArrayList<>();
-    }
-    
-    public void CrearProduccion(String pr){
-        
+    public Symbol(String name, boolean terminal){
+        this.name = name;
+        this.isterminal = terminal;
     }
 }
