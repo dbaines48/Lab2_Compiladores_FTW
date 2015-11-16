@@ -32,7 +32,7 @@ public class MainWindow extends javax.swing.JFrame {
     ArrayList<String> lines, workable;
     
     public void divideGIC(){
-        ArrayList<String> result = new ArrayList<>();
+        ArrayList<String> result = new ArrayList<String>();
         String[] part;
         for (String line : lines) {
             part = line.split("->");
@@ -41,7 +41,7 @@ public class MainWindow extends javax.swing.JFrame {
                 result.add(part[0]+"->"+d);
             }
         }
-        lines = new ArrayList<>();
+        lines = new ArrayList<String>();
         lines = result;
         System.out.println("----------------------");
         System.out.println("\tProducciones Individuales");
@@ -54,11 +54,22 @@ public class MainWindow extends javax.swing.JFrame {
     public void joinGIC(){
         ArrayList<String> result = new ArrayList<String>();
         ArrayList<String> Us, prods;
-        Us = new ArrayList<>();
-        prods = new ArrayList<>();
+        Us = new ArrayList<String>();
+        prods = new ArrayList<String>();
+        
+        int pos =0;
         for (String l : lines) {
-            String[] p = l.split("->");
-            int pos = -1;
+            String[] p = l.split("->");            
+            pos=(Us).indexOf(p[0]);
+            //System.out.println("P0 : ");
+            //System.out.println((int)p[0].toCharArray()[0]);
+            if(pos==-1){
+                Us.add(p[0]);
+                prods.add(p[1]);
+            }else{
+                prods.set(pos,prods.get(pos)+"|"+p[1]);
+            }
+            /*
             for (String U : Us) {
                 boolean ct = U.equals(p[0]);
                 if(ct){
@@ -73,7 +84,7 @@ public class MainWindow extends javax.swing.JFrame {
                 String nval = prods.get(pos)+"";
                 nval+="|"+p[1];
                 prods.set(pos, nval);
-            }
+            }*/
         }
         System.out.println("----------------------");
         System.out.println("\tProducciones Conjuntas");
