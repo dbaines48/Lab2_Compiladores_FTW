@@ -44,7 +44,7 @@ public class MainWindow extends javax.swing.JFrame {
         lines = new ArrayList<String>();
         lines = result;
         System.out.println("----------------------");
-        System.out.println("\tProducciones Individuales");
+        System.out.println("Producciones Individuales");
         for (String res : lines) {
             System.out.println(res);
         }
@@ -69,25 +69,9 @@ public class MainWindow extends javax.swing.JFrame {
             }else{
                 prods.set(pos,prods.get(pos)+"|"+p[1]);
             }
-            /*
-            for (String U : Us) {
-                boolean ct = U.equals(p[0]);
-                if(ct){
-                    pos = Us.indexOf(U);
-                    break;
-                }
-            }
-            if( pos == -1){
-                Us.add(p[0]);
-                prods.add(p[1]);
-            }else{
-                String nval = prods.get(pos)+"";
-                nval+="|"+p[1];
-                prods.set(pos, nval);
-            }*/
         }
         System.out.println("----------------------");
-        System.out.println("\tProducciones Conjuntas");
+        System.out.println("Producciones Conjuntas");
         for (int i = 0; i < prods.size(); i++) {
             result.add(Us.get(i)+"->"+prods.get(i));
         }
