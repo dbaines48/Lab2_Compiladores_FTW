@@ -16,12 +16,14 @@ class NonTerminal extends Symbol{
     ArrayList<Terminal> Primero;
     ArrayList<Terminal> Siguiente;
     ArrayList<Produccion> Producciones;
+    boolean prod_E;
     
     public NonTerminal(String name, boolean terminal) {
         super(name, terminal);
         Primero = new ArrayList<Terminal>();
         Siguiente = new ArrayList<Terminal>();
         Producciones = new ArrayList<Produccion>();
+        prod_E = false;
     }
     
 }

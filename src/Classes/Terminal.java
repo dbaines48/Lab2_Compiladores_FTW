@@ -10,7 +10,7 @@ package Classes;
  * @author Daniel
  */
 public class Terminal extends Symbol{
-
+    
     public Terminal(String name, boolean terminal) {
         super(name, terminal);
     }

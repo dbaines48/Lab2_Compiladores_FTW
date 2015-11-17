@@ -5,6 +5,7 @@
  */
 package Windows;
 
+import Classes.Gramatica;
 import Classes.Refinador;
 import java.io.BufferedReader;
 import java.io.File;
@@ -213,6 +214,7 @@ public class MainWindow extends javax.swing.JFrame {
             for (String t : temp) {
                 jTextArea2.append(t+"\n");
             }
+            Gramatica new_gram = new Gramatica(temp);
         }
         
         

@@ -15,8 +15,12 @@ public class Produccion {
     
     ArrayList<Symbol> Simbolos;
     
-    public Produccion(String prod){
+    public Produccion(){
         Simbolos = new ArrayList<>();
+    }
+    
+    public void addSymbol(Symbol sym){
+        Simbolos.add(sym);
     }
     
     public void CrearProduccion(String pr){
