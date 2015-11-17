@@ -5,6 +5,8 @@
  */
 package Classes;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author Daniel
@@ -12,9 +14,8 @@ package Classes;
 public class Symbol {
     String name;
     boolean isterminal;
-    
     public Symbol(String name, boolean terminal){
         this.name = name;
-        this.isterminal = terminal;
+        this.isterminal=terminal;
     }
 }

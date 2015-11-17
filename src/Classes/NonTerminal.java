@@ -18,8 +18,8 @@ class NonTerminal extends Symbol{
     ArrayList<Produccion> Producciones;
     boolean prod_E;
     
-    public NonTerminal(String name, boolean terminal) {
-        super(name, terminal);
+    public NonTerminal(String name) {
+        super(name, false);
         Primero = new ArrayList<Terminal>();
         Siguiente = new ArrayList<Terminal>();
         Producciones = new ArrayList<Produccion>();

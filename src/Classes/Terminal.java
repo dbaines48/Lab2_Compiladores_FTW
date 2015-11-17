@@ -11,7 +11,9 @@ package Classes;
  */
 public class Terminal extends Symbol{
     
-    public Terminal(String name, boolean terminal) {
-        super(name, terminal);
+    
+    
+    public Terminal(String name) {
+        super(name, true);
     }
 }
