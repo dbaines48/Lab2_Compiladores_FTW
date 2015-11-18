@@ -15,8 +15,12 @@ public class Produccion {
     
     ArrayList<Symbol> Simbolos;
     ArrayList<Terminal> primero;
+    ArrayList<Terminal> siguiente;
+    String string;
     public Produccion(){
         Simbolos = new ArrayList<>();
+        primero = new ArrayList<>();
+        siguiente = new ArrayList<>();
     }
     
     public void addSymbol(Symbol sym){
