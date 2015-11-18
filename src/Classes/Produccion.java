@@ -14,7 +14,7 @@ import java.util.ArrayList;
 public class Produccion {
     
     ArrayList<Symbol> Simbolos;
-    
+    ArrayList<Terminal> primero;
     public Produccion(){
         Simbolos = new ArrayList<>();
     }

@@ -14,7 +14,7 @@ import java.util.ArrayList;
 public class Gramatica {
 
     ArrayList<NonTerminal> NTs;
-    Terminal epsilon = new Terminal("€");
+    Terminal epsilon = new Terminal("&");
     Terminal peso = new Terminal("$");
     ArrayList<Boolean> PrimerOK = new ArrayList<Boolean>();
     ArrayList<Boolean> SgtOK = new ArrayList<Boolean>();
@@ -22,6 +22,7 @@ public class Gramatica {
     public Gramatica(ArrayList<String> gram) {
         NTs = new ArrayList<NonTerminal>();
         CrearGramatica(gram);
+        
         for (NonTerminal nt : NTs) {
             PrimerOK.add(false);
             SgtOK.add(false);
@@ -31,14 +32,17 @@ public class Gramatica {
         }
         showPrimeros(NTs);
         
-        
+        /* .---- Creando Siguientes*/
         NTs.get(0).Siguiente.add(peso);
-        for (NonTerminal nt : NTs) {
-            //Sgt(nt);
-            siguiente(nt);
+        for (NonTerminal i : NTs) {
+            for (NonTerminal nt : NTs) {
+                //Sgt(nt);
+                siguiente(nt);
+            }     
         }        
         showSgts(NTs);
         System.out.println("");
+         /* .---- End Sigiientes*/
     }
 
     public boolean isUpperCase(String letra) {
@@ -100,7 +104,7 @@ public class Gramatica {
                             }
                         }
                         i = j - 1;
-                        produccion.addSymbol(cre.compareTo("€") == 0 ? epsilon : new Terminal(cre));
+                        produccion.addSymbol(cre.compareTo("&") == 0 ? epsilon : new Terminal(cre));
                     }
                 }
             }
@@ -147,7 +151,7 @@ public class Gramatica {
     
     public void siguiente(NonTerminal ini){
         int  j,size;
-        boolean sw=false;
+        boolean sw=false, ya=false;
         Symbol su,s;
         NonTerminal nt,act;
       
@@ -156,13 +160,12 @@ public class Gramatica {
                 s=p.Simbolos.get(i);
                 if (!s.isterminal && s!=ini) {
                     if (llevaaE(p.Simbolos,(NonTerminal)s)) {
-                        siguiente((NonTerminal)s);
                         for (Terminal t : ini.Siguiente) {
                             if (((NonTerminal)s).Siguiente.indexOf(t)==-1) {
                                 ((NonTerminal)s).Siguiente.add(t);   
                             }
                         }
-                    }//else{
+                    }
                     j=i+1;
                     sw=false;
                     size=p.Simbolos.size();
@@ -189,57 +192,6 @@ public class Gramatica {
             }
         }
       //  showSgts(NTs);
-    }
-    
-    public void Sgt(NonTerminal ini) {
-        int c=0, f=0, index;
-        Symbol su,s;
-        NonTerminal nt,act;
-        Terminal t;
-        //if (!SgtOK.get(NTs.indexOf(ini))) {
-            for (Produccion p : ini.Producciones) {
-                //se recorre de atras a hacia adelante la cadena simbolos
-                for (int i = p.Simbolos.size()-1; i >=0; i--) {
-                    s=p.Simbolos.get(i);
-                    // Si encontramos un terminal, añadir este a los siguientes de todos los NONTERMINALES a su izquierda
-                    if (s.isterminal) {
-                        for (int j = 0; j < i; j++) {
-                            su=p.Simbolos.get(j);
-                            if (!su.isterminal) {
-                                ((NonTerminal)su).Siguiente.add((Terminal)s);
-                            }
-                        }
-                    }else{
-                    //si no es un terminal no que se encontró, añadir los primeros de este a los Siguiesntes de los NONTERminales a su izquierda
-                        for (int j = 0; j < i; j++) {
-                            //se buscan todos los NoTerminales (su) a la izquerda de S
-                            su=p.Simbolos.get(j);
-                            if (!su.isterminal) {
-                                //A cada su, añadir los primeros de S a los siguientes de SU sin epsilon
-                                for (int k=0; k< ((NonTerminal)s).Primero.size();k++) {
-                                    t=((NonTerminal)s).Primero.get(k);
-                                   if (t!=epsilon ) {
-                                        ((NonTerminal)su).Siguiente.add((Terminal)t);
-                                    }
-                                }
-                            }
-                        }                        
-                        if (llevaaE(p.Simbolos, (NonTerminal) s)) {
-                          
-                            for (int k=0; k< ((NonTerminal)ini).Siguiente.size();k++) {
-                                t=((NonTerminal)ini).Siguiente.get(k);
-                                if (t!=epsilon && t!=s ) {
-                                    ((NonTerminal)s).Siguiente.add((Terminal)t);
-                                }
-                            }
-                            
-                        }
-                    }
-                    
-                }
-            }
-          //  SgtOK.set(NTs.indexOf(ini),true);
-        //}
     }
     
     public boolean llevaaE(ArrayList<Symbol> prod, NonTerminal dude){
