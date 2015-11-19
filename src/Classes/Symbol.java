@@ -12,7 +12,7 @@ import java.util.ArrayList;
  * @author Daniel
  */
 public class Symbol {
-    String name;
+    public String name;
     boolean isterminal;
     public Symbol(String name, boolean terminal){
         this.name = name;

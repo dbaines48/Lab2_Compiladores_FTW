@@ -13,12 +13,13 @@ import java.util.ArrayList;
  */
 public class Gramatica {
 
-    ArrayList<NonTerminal> NTs;
+    public ArrayList<NonTerminal> NTs;
     Terminal epsilon = new Terminal("&");
     Terminal peso = new Terminal("$");
     ArrayList<Boolean> PrimerOK = new ArrayList<Boolean>();
     ArrayList<Boolean> SgtOK = new ArrayList<Boolean>();
-    ArrayList<Terminal> terminals;
+    public ArrayList<Terminal> terminals;
+    public Produccion[][] tabla_M;
 
      public Gramatica(ArrayList<String> gram) {
         NTs = new ArrayList<NonTerminal>();
@@ -46,6 +47,27 @@ public class Gramatica {
         showSgts(NTs);
         System.out.println("");
          /* .---- End Sigiientes*/
+        tabla_M = new Produccion[100][100];
+        HacerTablaM();
+        //showTablaM();
+        System.out.println("ok");
+    }
+     
+    void showTablaM(){
+        System.out.print("\t");
+        for (Terminal terminal : terminals) {
+            System.out.print(terminal.name+"\t");
+        }
+        for (int i = 0; i < NTs.size(); i++) {
+            System.out.print(NTs.get(i).name+"\t");
+            for (int j = 0; j < terminals.size(); j++) {
+                if(tabla_M[i][j] == null)
+                    System.out.print(" \t");
+                else
+                    System.out.print(tabla_M[i][j].string+"\t");
+            }
+            System.out.println("");
+        }
     }
      
     public void CrearGramatica(ArrayList<String> gramatica){
@@ -133,7 +155,7 @@ public class Gramatica {
             String p = res.split("->")[1];
             for (int i = 0; i < p.length(); i++) {
                 String c = p.substring(i,i+1);
-                if(!isUpperCase(c) && c.compareTo("&")!=0){
+                if(!isUpperCase(c) && c.compareTo("&")!=0 && c.compareTo("'")!=0){
                     
                     if(terminals.indexOf(c)==-1)
                         terminals.add(new Terminal(c));
@@ -297,5 +319,26 @@ public class Gramatica {
             System.out.print("\b}\n");
         }
         System.out.println("................");
+    }
+    
+    public void HacerTablaM(){
+        for (int i = 0; i < 100; i++) {
+            for (int j = 0; j < 100; j++) {
+                tabla_M[i][j] = null;
+            }
+        }
+        for (NonTerminal nt : NTs) {
+            for (Produccion pr : nt.Producciones) {
+                if(pr.primero.indexOf(epsilon)== -1){ // no contiene a epsilon
+                    for (Terminal ter : pr.primero) {
+                        tabla_M[NTs.indexOf(nt)][terminals.indexOf(ter)] = pr;
+                    }
+                }else{ // contiene a epsilon
+                    for (Terminal ter : nt.Siguiente) {
+                        tabla_M[NTs.indexOf(nt)][terminals.indexOf(ter)] = pr;
+                    }
+                }
+            }
+        }
     }
 }

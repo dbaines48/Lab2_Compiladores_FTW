@@ -16,7 +16,7 @@ public class Produccion {
     ArrayList<Symbol> Simbolos;
     ArrayList<Terminal> primero;
     ArrayList<Terminal> siguiente;
-    String string;
+    public String string;
     public Produccion(){
         Simbolos = new ArrayList<>();
         primero = new ArrayList<>();

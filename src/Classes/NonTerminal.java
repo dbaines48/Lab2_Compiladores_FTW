@@ -11,7 +11,7 @@ import java.util.ArrayList;
  *
  * @author Daniel
  */
-class NonTerminal extends Symbol{
+public class NonTerminal extends Symbol{
  
     ArrayList<Terminal> Primero;
     ArrayList<Terminal> Siguiente;
