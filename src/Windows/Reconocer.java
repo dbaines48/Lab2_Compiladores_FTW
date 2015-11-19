@@ -6,9 +6,9 @@
 package Windows;
 
 import Classes.*;
-import java.util.ArrayList;
 import java.util.Stack;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -21,6 +21,9 @@ public class Reconocer extends javax.swing.JFrame {
      */
     
     Gramatica g;
+    Stack<String> Pila, Entrada;
+    String Salida;
+    
     
     public Reconocer(Gramatica gram) {
         initComponents();
@@ -31,14 +34,31 @@ public class Reconocer extends javax.swing.JFrame {
         return ((int) letra.charAt(0) >= 65 && (int) letra.charAt(0) <= 90) ? true : false;
     }
     
+    public String mostrarPila(){
+        String str ="";
+        for (String p : Pila) {
+            str += p; 
+        }
+        return str;
+    }
+    
+    public String mostrarEntrada(){
+        String str = "";
+        for (String p : Entrada) {
+            str = p + str;
+        }
+        return str;
+    }
+    
     private void ReconocerCadena(String cadena){
         boolean seguir = true;
         
-        Stack<String> Pila, Entrada;
-        String Salida;
+        DefaultTableModel dm = (DefaultTableModel)jTable1.getModel();
+        dm.setRowCount(0);
         
         Pila = new Stack();
         Entrada = new Stack();
+        Salida = "";
         
         Pila.push("$");
         Pila.push(g.NTs.get(0).name);
@@ -61,10 +81,12 @@ public class Reconocer extends javax.swing.JFrame {
                     Produccion prod = g.tabla_M[f][c];
                     if(prod == null)
                     {
+                        Salida = "";
                         JOptionPane.showMessageDialog(this, "No se reconoció la cadena.");
                         seguir = false;
                     }else{
                         Salida = prod.string;
+                        dm.addRow(new String[]{mostrarPila(), mostrarEntrada(), Salida});
                         Pila.pop();
                         for (int i = prod.Simbolos.size() -1; i >= 0; i--) {
                             if(!prod.Simbolos.get(i).name.equals("&"))
@@ -72,12 +94,15 @@ public class Reconocer extends javax.swing.JFrame {
                         }
                     }
                 }else{
+                    Salida = "";
                     JOptionPane.showMessageDialog(this, "No se reconoció la cadena");
                     seguir = false;
                 }
             }else{ //si es un terminal
                 if(Pila.peek() != "'"){
                     if(Pila.peek().compareTo(Entrada.peek()) == 0){
+                        Salida = "";
+                        dm.addRow(new String[]{mostrarPila(), mostrarEntrada(), Salida});
                         Pila.pop();
                         Entrada.pop();
                         Salida = "";
@@ -88,8 +113,12 @@ public class Reconocer extends javax.swing.JFrame {
                 }
             }
         }
-        if(seguir)
+        if(seguir){
+            Salida = "";
+            dm.addRow(new String[] {mostrarPila(), mostrarEntrada(), Salida});
             JOptionPane.showMessageDialog(this, "Se reconoció la cadena");
+        }
+            
     }
     
     /**
@@ -121,9 +150,24 @@ public class Reconocer extends javax.swing.JFrame {
 
             },
             new String [] {
-
+                "Pila", "Entrada", "Salida"
             }
-        ));
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, true, true
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
         jLabel1.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
