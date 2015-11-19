@@ -206,8 +206,7 @@ public class Gramatica {
                 if (!s.isterminal && s!=ini) {
                     
                     if (llevaaE(p.Simbolos,(NonTerminal)s)) {
-                        for (Terminal t : ini.Siguiente) {
-                            
+                        for (Terminal t : ini.Siguiente) {                            
                             if (((NonTerminal)s).Siguiente.indexOf(t)==-1) {
                                 ((NonTerminal)s).Siguiente.add(t);   
                             }
@@ -239,7 +238,7 @@ public class Gramatica {
                                  ((NonTerminal)s).Siguiente.add(t);   
                                 }
                                 if (ini.Producciones.get(k).siguiente.indexOf(t)==-1 && t!=epsilon) {
-                                    ini.Producciones.get(k).siguiente.add(t);   
+                                   // ini.Producciones.get(k).siguiente.add(t);   
                                 }
                                 
                             }
