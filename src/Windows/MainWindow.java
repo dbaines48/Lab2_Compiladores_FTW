@@ -284,6 +284,8 @@ public class MainWindow extends javax.swing.JFrame {
                 jTextArea2.append(t+"\n");
             }
             new_gram = new Gramatica(temp);
+            new_gram.showPrimeros(new_gram.NTs, jTextArea3);
+            new_gram.showSgts(new_gram.NTs, jTextArea4);
         }
         
         

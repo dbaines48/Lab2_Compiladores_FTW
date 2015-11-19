@@ -6,6 +6,7 @@
 package Classes;
 
 import java.util.ArrayList;
+import javax.swing.JTextArea;
 
 /**
  *
@@ -34,7 +35,7 @@ public class Gramatica {
         for (NonTerminal nt : NTs) {
            Primeros(nt);
         }
-        showPrimeros(NTs);
+        //showPrimeros(NTs);
         
         /* .---- Creando Siguientes*/
         NTs.get(0).Siguiente.add(peso);
@@ -44,7 +45,7 @@ public class Gramatica {
                 siguiente(nt);
             }     
         }        
-        showSgts(NTs);
+        //showSgts(NTs);
         System.out.println("");
          /* .---- End Sigiientes*/
         tabla_M = new Produccion[100][100];
@@ -302,28 +303,35 @@ public class Gramatica {
     return true;
    }
     
-    public static void showPrimeros(ArrayList<NonTerminal> gram){
+    public void showPrimeros(ArrayList<NonTerminal> gram, JTextArea jt){
         System.out.println("........PRIMEROS........");
+       jt.setText("");
        
         for (NonTerminal nt : gram) {
             System.out.print(nt.name+" = {");
+            jt.append(nt.name+" = {");
             for (Terminal t : nt.Primero) {
                 System.out.print(t.name+",");
+                jt.append(t.name+",");
             }
             System.out.print("\b}\n");
+            jt.append("}\n");
         }
         System.out.println("................");
     }
    
-    public static void showSgts(ArrayList<NonTerminal> gram){
+    public void showSgts(ArrayList<NonTerminal> gram, JTextArea jt){
         System.out.println("........SIGUIENTES........");
-       
+       jt.setText("");
         for (NonTerminal nt : gram) {
             System.out.print(nt.name+" = {");
+            jt.append(nt.name+" = {");
             for (Terminal t : nt.Siguiente) {
                 System.out.print(t.name+",");
+                jt.append(t.name+",");
             }
             System.out.print("\b}\n");
+            jt.append("}\n");
         }
         System.out.println("................");
     }
