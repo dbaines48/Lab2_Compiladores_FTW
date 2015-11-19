@@ -156,8 +156,14 @@ public class Gramatica {
             for (int i = 0; i < p.length(); i++) {
                 String c = p.substring(i,i+1);
                 if(!isUpperCase(c) && c.compareTo("&")!=0 && c.compareTo("'")!=0){
-                    
-                    if(terminals.indexOf(c)==-1)
+                    int pos = -1;
+                    for (Terminal t : terminals) {
+                        if(t.name.compareTo(c)==0){
+                            pos = terminals.indexOf(t);
+                            break;
+                        }
+                    }
+                    if(pos==-1)
                         terminals.add(new Terminal(c));
                 }
             }
