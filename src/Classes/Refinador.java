@@ -24,8 +24,8 @@ public class Refinador {
         for (int i = 0; i < gram.size(); i++) {
             prod=gram.get(i);
             gem=prod.split("->")[0];
-            nogem=prod.split("->")[1]; 
-            if (nogem.indexOf(gem)==0 && (nogem.indexOf(gem+"'") != nogem.indexOf(gem) )) {
+            nogem=prod.split("->")[1];
+            if ((("|"+nogem).indexOf("|"+gem+"'") != ("|"+nogem).indexOf("|"+gem))) {
                 subnogem=nogem.split("\\|");
                 alfa="";
                 beta="";
@@ -50,6 +50,7 @@ public class Refinador {
         }
         return gram;
     }
+    
     public static ArrayList<String> factorize(ArrayList<String> grama){
         String gem, nogem, eval,compare, beta, alfa, gamma, element, exp="'";        
         ArrayList<String> gram=(ArrayList<String>) grama.clone();

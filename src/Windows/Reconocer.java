@@ -6,6 +6,8 @@
 package Windows;
 
 import Classes.*;
+import java.util.ArrayList;
+import java.util.Stack;
 import javax.swing.JOptionPane;
 
 /**
@@ -25,6 +27,71 @@ public class Reconocer extends javax.swing.JFrame {
         this.g = gram;
     }
 
+    public boolean isUpperCase(String letra) {
+        return ((int) letra.charAt(0) >= 65 && (int) letra.charAt(0) <= 90) ? true : false;
+    }
+    
+    private void ReconocerCadena(String cadena){
+        boolean seguir = true;
+        
+        Stack<String> Pila, Entrada;
+        String Salida;
+        
+        Pila = new Stack();
+        Entrada = new Stack();
+        
+        Pila.push("$");
+        Pila.push(g.NTs.get(0).name);
+        
+        Entrada.push("$");
+        String[] part = cadena.split("");
+        for (int i = part.length-1; i >= 0; i--) {
+            Entrada.push(part[i]);
+        }
+        
+        while(seguir && !"$".equals(Pila.peek())){
+            if(isUpperCase(Pila.peek())){ // si es un no terminal
+                String cc = Entrada.peek();
+                String cf = Pila.peek();
+                int f = -1;
+                int c = -1;
+                f = g.NTs.indexOf(g.findNT(cf));
+                c = g.terminals.indexOf(g.findTerminal(cc));
+                if(f!=-1 && c!=-1){
+                    Produccion prod = g.tabla_M[f][c];
+                    if(prod == null)
+                    {
+                        JOptionPane.showMessageDialog(this, "No se reconoció la cadena.");
+                        seguir = false;
+                    }else{
+                        Salida = prod.string;
+                        Pila.pop();
+                        for (int i = prod.Simbolos.size() -1; i >= 0; i--) {
+                            if(!prod.Simbolos.get(i).name.equals("&"))
+                                Pila.push(prod.Simbolos.get(i).name);
+                        }
+                    }
+                }else{
+                    JOptionPane.showMessageDialog(this, "No se reconoció la cadena");
+                    seguir = false;
+                }
+            }else{ //si es un terminal
+                if(Pila.peek() != "'"){
+                    if(Pila.peek().compareTo(Entrada.peek()) == 0){
+                        Pila.pop();
+                        Entrada.pop();
+                        Salida = "";
+                    }else{
+                        JOptionPane.showMessageDialog(this, "No se reconoció la cadena.");
+                        seguir = false;
+                    }
+                }
+            }
+        }
+        if(seguir)
+            JOptionPane.showMessageDialog(this, "Se reconoció la cadena");
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -42,6 +109,7 @@ public class Reconocer extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Reconocer cadena");
 
         jLabel2.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         jLabel2.setText("Ingrese Cadena a Reconocer:");
@@ -110,7 +178,7 @@ public class Reconocer extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         if(!jTextField1.getText().isEmpty()){
-            
+            ReconocerCadena(jTextField1.getText());
         }else{
             JOptionPane.showMessageDialog(null,"Escriba una cadena primero.");  
         }

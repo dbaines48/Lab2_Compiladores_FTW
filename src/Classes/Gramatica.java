@@ -186,7 +186,8 @@ public class Gramatica {
                         ini.Producciones.get(i).primero.add((Terminal) s);
                     }                      
                 } else {
-                    Primeros((NonTerminal) s);
+                    if(s != ini)
+                        Primeros((NonTerminal) s);
                     ini.Primero.addAll(((NonTerminal) s).Primero);
                     ini.Producciones.get(i).primero.addAll(((NonTerminal) s).Primero);
                     c++;

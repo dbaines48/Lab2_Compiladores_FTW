@@ -13,7 +13,7 @@ import java.util.ArrayList;
  */
 public class Produccion {
     
-    ArrayList<Symbol> Simbolos;
+    public ArrayList<Symbol> Simbolos;
     ArrayList<Terminal> primero;
     ArrayList<Terminal> siguiente;
     public String string;
